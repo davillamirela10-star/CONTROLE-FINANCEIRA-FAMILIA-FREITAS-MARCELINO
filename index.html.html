@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Controle Financeiro Família Freitas Marcelino</title>
+<style>
+:root{
+--rosa:#ff4d8d;--rosa-escuro:#c9184a;--rosa-medio:#ff70a6;--rosa-claro:#ffe3ef;--fundo:#fff5fa;
+--verde:#16a34a;--verde-claro:#dcfce7;--vermelho:#e63946;--amarelo:#f59e0b;--azul:#2563eb;
+--card:#fff;--texto:#2b2026;--cinza:#806a75;--borda:#ffd1e3;--sombra:0 8px 24px rgba(201,24,74,.14)
+}
+*{box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
+body{margin:0;background:radial-gradient(circle at top,#fff 0,var(--fundo) 48%,#ffeaf3 100%);color:var(--texto);min-height:100vh}
+header{background:linear-gradient(135deg,var(--rosa),var(--rosa-escuro));color:#fff;padding:26px 16px 40px;border-bottom-left-radius:34px;border-bottom-right-radius:34px;box-shadow:var(--sombra)}
+.topo{width:min(1180px,96%);margin:auto}
+h1{margin:0;font-size:clamp(25px,5vw,40px);line-height:1.15}.subtitulo{margin:9px 0 0;opacity:.95;font-size:15px}
+main{width:min(1180px,96%);margin:-22px auto 35px}
+.cards{display:grid;grid-template-columns:repeat(4,minmax(160px,1fr));gap:14px;margin-bottom:16px}
+.card{background:var(--card);border:1px solid var(--borda);border-radius:22px;box-shadow:var(--sombra);padding:18px}
+.mini{position:relative;overflow:hidden}.mini:after{content:"";position:absolute;width:95px;height:95px;border-radius:50%;background:var(--rosa-claro);right:-32px;top:-32px;z-index:0}.mini>*{position:relative;z-index:1}
+.mini span{color:var(--cinza);font-size:12px;font-weight:bold;text-transform:uppercase}.mini strong{display:block;margin-top:8px;font-size:clamp(20px,4vw,30px);color:var(--rosa-escuro)}
+.positivo strong{color:var(--verde)}.negativo strong{color:var(--vermelho)}
+.meta-card{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center;margin-bottom:16px}.carinha{font-size:48px;text-align:center}
+.meta-info h2,h2{margin:0 0 16px;color:var(--rosa-escuro);font-size:21px}.meta-linha{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end;margin-bottom:8px}.meta-linha input{margin:0}
+.barra-fundo{height:15px;background:var(--rosa-claro);border-radius:999px;overflow:hidden;margin:8px 0}.barra{height:100%;width:0%;background:var(--verde);border-radius:999px;transition:.25s}.msg{margin:0;color:var(--cinza);font-weight:bold;font-size:14px}
+.tabs{position:sticky;top:0;z-index:10;display:flex;gap:10px;flex-wrap:wrap;background:rgba(255,245,250,.92);backdrop-filter:blur(8px);padding:10px 0;margin-bottom:14px}
+.tab{border:1px solid var(--borda);background:#fff;color:var(--rosa-escuro);box-shadow:0 4px 12px rgba(201,24,74,.08);border-radius:999px;padding:12px 18px;cursor:pointer;font-weight:bold;font-size:14px;width:auto;flex:1;min-width:125px}.tab.ativa{background:var(--rosa-escuro);color:#fff;border-color:var(--rosa-escuro)}
+.area{display:none}.area.ativa{display:block}.layout{display:grid;grid-template-columns:370px 1fr;gap:16px;align-items:start}
+label{font-size:13px;font-weight:bold;color:var(--cinza);display:block;margin-bottom:6px}
+input,select,textarea{width:100%;border:1px solid var(--borda);background:#fff;color:var(--texto);border-radius:14px;padding:12px;font-size:16px;outline:none}
+textarea{resize:vertical;min-height:70px}input:focus,select:focus,textarea:focus{border-color:var(--rosa);box-shadow:0 0 0 3px rgba(255,77,141,.16)}
+.linha{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}.campo{margin-bottom:12px}
+button{border:none;border-radius:14px;padding:12px 15px;cursor:pointer;font-weight:bold;font-size:15px;transition:.15s}button:hover{filter:brightness(.97);transform:translateY(-1px)}
+.btn-principal{background:var(--rosa-escuro);color:#fff;width:100%;font-size:16px}.btn-verde{background:var(--verde);color:#fff;width:100%;font-size:16px}.btn-secundario{background:var(--rosa-claro);color:var(--rosa-escuro)}.btn-perigo{background:var(--vermelho);color:#fff}.btn-azul{background:var(--azul);color:#fff}.btn-amarelo{background:var(--amarelo);color:#fff}
+.botoes{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}.botoes button{flex:1;min-width:130px}
+.filtros{display:grid;grid-template-columns:1.2fr .9fr .9fr;gap:10px;margin-bottom:12px}.tabela-area{overflow-x:auto;border-radius:16px;border:1px solid var(--borda)}
+table{width:100%;border-collapse:collapse;min-width:790px;background:#fff}th{background:var(--rosa-escuro);color:#fff;padding:12px 9px;font-size:13px;text-align:left;white-space:nowrap}td{padding:11px 9px;border-bottom:1px solid var(--borda);font-size:14px;vertical-align:middle}tr:hover td{background:#fff0f6}
+.valor{font-weight:bold;white-space:nowrap}.entrada{color:var(--verde)}.despesa{color:var(--vermelho)}
+.tag{display:inline-block;padding:5px 9px;border-radius:999px;background:var(--rosa-claro);color:var(--rosa-escuro);font-weight:bold;font-size:12px;white-space:nowrap}.tag-verde{background:var(--verde-claro);color:var(--verde)}.tag-azul{background:#dbeafe;color:var(--azul)}
+.acoes-tabela{display:flex;gap:6px;flex-wrap:wrap}.acoes-tabela button{padding:8px 10px;font-size:12px}.vazio{text-align:center;color:var(--cinza);padding:28px 12px}.oculto{display:none!important}
+.grafico{margin-top:14px;display:grid;gap:10px}.barra-item{display:grid;grid-template-columns:120px 1fr 88px;gap:8px;align-items:center;font-size:13px}
+.info-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.info{background:#fff5fa;border:1px solid var(--borda);border-radius:16px;padding:12px}.info span{display:block;color:var(--cinza);font-size:12px;font-weight:bold}.info strong{display:block;margin-top:5px;font-size:18px}
+.cartao-box{background:#fff8fb;border:1px dashed var(--rosa-medio);border-radius:18px;padding:14px;margin-bottom:12px}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--rosa-escuro);color:#fff;padding:13px 16px;border-radius:15px;box-shadow:var(--sombra);display:none;z-index:20;max-width:90%;text-align:center}.input-file{display:none}
+@media(max-width:950px){main{width:94%}.cards{grid-template-columns:repeat(2,1fr)}.layout{grid-template-columns:1fr}.filtros{grid-template-columns:1fr}.info-grid{grid-template-columns:1fr}}
+@media(max-width:620px){header{padding:24px 14px 36px}.cards{grid-template-columns:1fr 1fr;gap:10px}.card{padding:14px;border-radius:18px}.mini strong{font-size:20px}.meta-card{grid-template-columns:1fr;text-align:center}.meta-linha{grid-template-columns:1fr}.tabs{display:grid;grid-template-columns:repeat(2,1fr);position:static}.tab{min-width:0;padding:11px 8px;font-size:12.5px}.linha{grid-template-columns:1fr}table{min-width:760px}}
+@media(max-width:420px){.cards{grid-template-columns:1fr}}
+
+.btn-imprimir-topo{
+  margin-top:14px;
+  background:white;
+  color:var(--rosa-escuro);
+  border:none;
+  border-radius:999px;
+  padding:12px 18px;
+  width:auto;
+  box-shadow:0 4px 12px rgba(0,0,0,.12);
+}
+
+@media print{
+  body{
+    background:white!important;
+    color:#111!important;
+    padding:0!important;
+  }
+
+  header{
+    background:white!important;
+    color:#111!important;
+    box-shadow:none!important;
+    border-radius:0!important;
+    padding:10px 0 15px!important;
+  }
+
+  .topo, main{
+    width:100%!important;
+    margin:0!important;
+  }
+
+  .tabs, form, .botoes, .btn-imprimir-topo, .toast, .input-file, .acoes-tabela, .filtros{
+    display:none!important;
+  }
+
+  .area{
+    display:block!important;
+    page-break-inside:avoid;
+    margin-bottom:14px;
+  }
+
+  .card{
+    box-shadow:none!important;
+    border:1px solid #ddd!important;
+    border-radius:8px!important;
+    padding:12px!important;
+    margin-bottom:12px!important;
+  }
+
+  .cards{
+    grid-template-columns:repeat(4,1fr)!important;
+    gap:8px!important;
+  }
+
+  .mini::after{
+    display:none!important;
+  }
+
+  table{
+    min-width:100%!important;
+    font-size:11px!important;
+  }
+
+  th{
+    background:#eee!important;
+    color:#111!important;
+  }
+
+  th,td{
+    padding:5px!important;
+    border:1px solid #ccc!important;
+  }
+
+  .layout{
+    display:block!important;
+  }
+
+  .vazio{
+    display:none!important;
+  }
+
+  h1{
+    font-size:22px!important;
+  }
+
+  h2{
+    font-size:17px!important;
+    margin-bottom:8px!important;
+  }
+}
+
+</style>
+</head>
+<body>
+<header><div class="topo"><h1>🌸 Controle Financeiro Família Freitas Marcelino</h1><p class="subtitulo">Entradas, despesas, cartão de crédito, parcelas, saldo e meta mensal.</p><button class="btn-imprimir-topo" onclick="window.print()">🖨️ Imprimir relatório</button></div></header>
+<main>
+<section class="cards">
+<div class="card mini positivo"><span>Entradas do mês</span><strong id="cardEntradas">R$ 0,00</strong></div>
+<div class="card mini negativo"><span>Despesas do mês</span><strong id="cardDespesas">R$ 0,00</strong></div>
+<div class="card mini"><span>Saldo do mês</span><strong id="cardSaldo">R$ 0,00</strong></div>
+<div class="card mini"><span>Fatura crédito</span><strong id="cardCredito">R$ 0,00</strong></div>
+</section>
+
+<section class="card meta-card">
+<div class="carinha" id="carinha">🙂</div>
+<div class="meta-info">
+<h2>🎯 Meta mensal de despesas</h2>
+<div class="meta-linha"><input id="metaInput" type="number" step="0.01" placeholder="Digite sua meta. Ex: 2000"><button class="btn-secundario" onclick="salvarMeta()">Salvar meta</button></div>
+<div class="barra-fundo"><div class="barra" id="barraMeta"></div></div><p class="msg" id="msgMeta">Defina uma meta para acompanhar seus gastos.</p>
+</div>
+</section>
+
+<nav class="tabs">
+<button class="tab ativa" onclick="abrirAba('resumo',this)">🏠 Resumo</button>
+<button class="tab" onclick="abrirAba('entradas',this)">💰 Entradas</button>
+<button class="tab" onclick="abrirAba('despesas',this)">🛒 Despesas</button>
+<button class="tab" onclick="abrirAba('cartao',this)">💳 Cartão</button>
+<button class="tab" onclick="abrirAba('historico',this)">📋 Histórico</button>
+</nav>
+
+<section id="resumo" class="area ativa"><div class="card">
+<h2>📊 Resumo do mês</h2>
+<div class="info-grid">
+<div class="info"><span>Maior entrada</span><strong class="entrada" id="maiorEntrada">R$ 0,00</strong></div>
+<div class="info"><span>Maior despesa</span><strong class="despesa" id="maiorDespesa">R$ 0,00</strong></div>
+<div class="info"><span>Categoria que mais gastou</span><strong id="topCategoria">-</strong></div>
+<div class="info"><span>Situação da meta</span><strong id="situacaoMeta">Sem meta</strong></div>
+<div class="info"><span>Total no crédito este mês</span><strong id="creditoMes">R$ 0,00</strong></div>
+<div class="info"><span>Parcelas futuras</span><strong id="parcelasFuturas">R$ 0,00</strong></div>
+</div>
+<div class="grafico" id="graficoCategorias"></div>
+<div class="botoes"><button class="btn-principal" onclick="window.print()">🖨️ Imprimir relatório</button><button class="btn-azul" onclick="exportarBackup()">Exportar backup</button><button class="btn-secundario" onclick="document.getElementById('importarArquivo').click()">Importar backup</button><button class="btn-perigo" onclick="limparTudo()">Apagar tudo</button><input class="input-file" id="importarArquivo" type="file" accept=".json" onchange="importarBackup(event)"></div>
+</div></section>
+
+<section id="entradas" class="area"><div class="layout">
+<form class="card" id="formEntrada"><h2>💰 Nova entrada</h2>
+<div class="campo"><label>Descrição</label><input id="entradaDesc" placeholder="Ex: salário, PIX recebido, venda..." required></div>
+<div class="linha"><div><label>Valor</label><input id="entradaValor" type="number" step="0.01" min="0" placeholder="0,00" required></div><div><label>Data</label><input id="entradaData" type="date" required></div></div>
+<div class="campo"><label>Origem</label><select id="entradaCategoria"><option>Salário</option><option>PIX recebido</option><option>Venda</option><option>Reembolso</option><option>Presente</option><option>Renda extra</option><option>Outro</option></select></div>
+<div class="campo"><label>Observação</label><textarea id="entradaObs" placeholder="Opcional"></textarea></div><button class="btn-verde">Salvar entrada</button>
+</form>
+<div class="card"><h2>📥 Entradas registradas</h2><div class="filtros"><input id="buscaEntrada" placeholder="Pesquisar entrada..." oninput="renderizar()"><select id="filtroEntradaCategoria" onchange="renderizar()"><option value="">Todas as origens</option><option>Salário</option><option>PIX recebido</option><option>Venda</option><option>Reembolso</option><option>Presente</option><option>Renda extra</option><option>Outro</option></select><input id="filtroEntradaMes" type="month" onchange="renderizar()"></div><div class="tabela-area"><table><thead><tr><th>Data</th><th>Descrição</th><th>Origem</th><th>Valor</th><th>Ações</th></tr></thead><tbody id="listaEntradas"></tbody></table></div><div id="vazioEntradas" class="vazio oculto">Nenhuma entrada cadastrada.</div></div>
+</div></section>
+
+<section id="despesas" class="area"><div class="layout">
+<form class="card" id="formDespesa"><h2>🛒 Nova despesa</h2>
+<div class="campo"><label>Descrição</label><input id="despesaDesc" placeholder="Ex: mercado, farmácia, lanche..." required></div>
+<div class="linha"><div><label>Valor total</label><input id="despesaValor" type="number" step="0.01" min="0" placeholder="0,00" required oninput="calcularParcela()"></div><div><label>Data da compra</label><input id="despesaData" type="date" required></div></div>
+<div class="linha"><div><label>Categoria</label><select id="despesaCategoria"><option>Mercado</option><option>Alimentação</option><option>Saúde</option><option>Farmácia</option><option>Casa</option><option>Faculdade</option><option>Beleza</option><option>Pet</option><option>Lazer</option><option>Transporte</option><option>Roupas</option><option>Assinaturas</option><option>Outro</option></select></div><div><label>Pagamento</label><select id="despesaPagamento" onchange="mostrarCredito()"><option>PIX</option><option>Dinheiro</option><option>Débito</option><option>Crédito</option><option>Outro</option></select></div></div>
+
+<div id="areaCredito" class="cartao-box oculto">
+<h2 style="font-size:18px;margin-bottom:12px">💳 Detalhes do crédito</h2>
+<div class="linha"><div><label>Foi parcelado?</label><select id="creditoParcelado" onchange="mostrarParcelado()"><option>Não</option><option>Sim</option></select></div><div><label>Mês da fatura/1ª parcela</label><input id="creditoMesInicio" type="month"></div></div>
+<div id="areaParcelado" class="linha oculto"><div><label>Quantidade de parcelas</label><input id="qtdParcelas" type="number" min="2" max="60" value="2" oninput="calcularParcela()"></div><div><label>Valor de cada parcela</label><input id="valorParcela" type="text" readonly></div></div>
+<p class="msg">Se for parcelado, o site mostra as parcelas na aba Cartão automaticamente.</p>
+</div>
+
+<div class="campo"><label>Tipo</label><select id="despesaTipo"><option>Necessário</option><option>Planejado</option><option>Impulso</option><option>Emergência</option></select></div>
+<div class="campo"><label>Observação</label><textarea id="despesaObs" placeholder="Opcional"></textarea></div><button class="btn-principal">Salvar despesa</button>
+</form>
+<div class="card"><h2>📤 Despesas registradas</h2><div class="filtros"><input id="buscaDespesa" placeholder="Pesquisar despesa..." oninput="renderizar()"><select id="filtroDespesaCategoria" onchange="renderizar()"><option value="">Todas as categorias</option><option>Mercado</option><option>Alimentação</option><option>Saúde</option><option>Farmácia</option><option>Casa</option><option>Faculdade</option><option>Beleza</option><option>Pet</option><option>Lazer</option><option>Transporte</option><option>Roupas</option><option>Assinaturas</option><option>Outro</option></select><input id="filtroDespesaMes" type="month" onchange="renderizar()"></div><div class="tabela-area"><table><thead><tr><th>Data</th><th>Descrição</th><th>Categoria</th><th>Pagamento</th><th>Parcelas</th><th>Valor</th><th>Ações</th></tr></thead><tbody id="listaDespesas"></tbody></table></div><div id="vazioDespesas" class="vazio oculto">Nenhuma despesa cadastrada.</div></div>
+</div></section>
+
+<section id="cartao" class="area"><div class="card"><h2>💳 Controle do cartão de crédito</h2>
+<div class="filtros"><input id="buscaCartao" placeholder="Pesquisar compra no cartão..." oninput="renderizar()"><input id="filtroCartaoMes" type="month" onchange="renderizar()"><select id="filtroCartaoStatus" onchange="renderizar()"><option value="">Todas</option><option value="avista">À vista</option><option value="parcelado">Parceladas</option></select></div>
+<div class="info-grid" style="margin-bottom:14px"><div class="info"><span>Fatura do mês filtrado</span><strong id="faturaFiltrada">R$ 0,00</strong></div><div class="info"><span>Compras no cartão</span><strong id="qtdCartao">0</strong></div></div>
+<div class="tabela-area"><table><thead><tr><th>Fatura</th><th>Compra</th><th>Categoria</th><th>Parcela</th><th>Valor da parcela</th><th>Total</th><th>Status</th></tr></thead><tbody id="listaCartao"></tbody></table></div><div id="vazioCartao" class="vazio oculto">Nenhuma compra no cartão encontrada.</div>
+</div></section>
+
+<section id="historico" class="area"><div class="card"><h2>📋 Histórico completo</h2>
+<div class="filtros"><input id="buscaHistorico" placeholder="Pesquisar no histórico..." oninput="renderizar()"><select id="filtroTipoHistorico" onchange="renderizar()"><option value="">Entradas e despesas</option><option>Entrada</option><option>Despesa</option></select><input id="filtroHistoricoMes" type="month" onchange="renderizar()"></div>
+<div class="tabela-area"><table><thead><tr><th>Tipo</th><th>Data</th><th>Descrição</th><th>Categoria</th><th>Valor</th><th>Ações</th></tr></thead><tbody id="listaHistorico"></tbody></table></div><div id="vazioHistorico" class="vazio oculto">Nenhum registro encontrado.</div>
+</div></section>
+</main>
+<div class="toast" id="toast"></div>
+
+<script>
+const CHAVE="controle_financeiro_freitas_marcelino_v4";
+const CHAVE_META="meta_financeira_freitas_marcelino_v4";
+let registros=JSON.parse(localStorage.getItem(CHAVE))||[];
+let meta=Number(localStorage.getItem(CHAVE_META))||0;
+const $=id=>document.getElementById(id);
+function hojeISO(){return new Date().toISOString().slice(0,10)}
+function mesAtual(){return new Date().toISOString().slice(0,7)}
+function moeda(v){return Number(v||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}
+function dataBR(data){if(!data)return"-";const[a,m,d]=data.split("-");return`${d}/${m}/${a}`}
+function salvar(){localStorage.setItem(CHAVE,JSON.stringify(registros));renderizar()}
+function toast(msg){const el=$("toast");el.textContent=msg;el.style.display="block";setTimeout(()=>el.style.display="none",2300)}
+function abrirAba(id,botao){document.querySelectorAll(".area").forEach(a=>a.classList.remove("ativa"));document.querySelectorAll(".tab").forEach(t=>t.classList.remove("ativa"));$(id).classList.add("ativa");botao.classList.add("ativa")}
+function salvarMeta(){meta=Number($("metaInput").value)||0;localStorage.setItem(CHAVE_META,meta);renderizar();toast("Meta salva!")}
+function esc(texto){return String(texto||"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function addMeses(ym,add){const[a,m]=ym.split("-").map(Number);const d=new Date(a,m-1+add,1);return d.toISOString().slice(0,7)}
+function mostrarCredito(){const credito=$("despesaPagamento").value==="Crédito";$("areaCredito").classList.toggle("oculto",!credito);if(credito&&!$("creditoMesInicio").value)$("creditoMesInicio").value=mesAtual();mostrarParcelado()}
+function mostrarParcelado(){const show=$("despesaPagamento").value==="Crédito"&&$("creditoParcelado").value==="Sim";$("areaParcelado").classList.toggle("oculto",!show);calcularParcela()}
+function calcularParcela(){const valor=Number($("despesaValor").value)||0;const qtd=Math.max(2,Number($("qtdParcelas").value)||2);$("valorParcela").value=moeda(valor/qtd)}
+function cadastrarEntrada(e){e.preventDefault();const valor=Number($("entradaValor").value);if(valor<=0){alert("Digite um valor válido.");return}registros.push({id:Date.now()+"_"+Math.random(),tipo:"Entrada",desc:$("entradaDesc").value.trim(),valor,data:$("entradaData").value,categoria:$("entradaCategoria").value,pagamento:"",tipoCompra:"",obs:$("entradaObs").value.trim()});$("formEntrada").reset();$("entradaData").value=hojeISO();salvar();toast("Entrada salva!")}
+function cadastrarDespesa(e){e.preventDefault();const valor=Number($("despesaValor").value);if(valor<=0){alert("Digite um valor válido.");return}
+const pagamento=$("despesaPagamento").value;const ehCredito=pagamento==="Crédito";const parcelado=ehCredito?$("creditoParcelado").value:"Não";const qtd=parcelado==="Sim"?Math.max(2,Number($("qtdParcelas").value)||2):1;const mesInicio=ehCredito?($("creditoMesInicio").value||mesAtual()):"";
+registros.push({id:Date.now()+"_"+Math.random(),tipo:"Despesa",desc:$("despesaDesc").value.trim(),valor,data:$("despesaData").value,categoria:$("despesaCategoria").value,pagamento,tipoCompra:$("despesaTipo").value,obs:$("despesaObs").value.trim(),credito:ehCredito,parcelado,parcelas:qtd,valorParcela:valor/qtd,mesInicio});
+$("formDespesa").reset();$("despesaData").value=hojeISO();$("creditoMesInicio").value=mesAtual();mostrarCredito();salvar();toast("Despesa salva!")}
+function excluir(id){if(!confirm("Deseja excluir este registro?"))return;registros=registros.filter(r=>String(r.id)!==String(id));salvar();toast("Registro excluído.")}
+function filtrarEntradas(){const busca=$("buscaEntrada").value.toLowerCase().trim(),cat=$("filtroEntradaCategoria").value,mes=$("filtroEntradaMes").value;return registros.filter(r=>{const texto=`${r.desc} ${r.categoria} ${r.obs}`.toLowerCase();return r.tipo==="Entrada"&&(!busca||texto.includes(busca))&&(!cat||r.categoria===cat)&&(!mes||r.data.startsWith(mes))}).sort((a,b)=>b.data.localeCompare(a.data))}
+function filtrarDespesas(){const busca=$("buscaDespesa").value.toLowerCase().trim(),cat=$("filtroDespesaCategoria").value,mes=$("filtroDespesaMes").value;return registros.filter(r=>{const texto=`${r.desc} ${r.categoria} ${r.pagamento} ${r.tipoCompra} ${r.obs}`.toLowerCase();return r.tipo==="Despesa"&&(!busca||texto.includes(busca))&&(!cat||r.categoria===cat)&&(!mes||r.data.startsWith(mes))}).sort((a,b)=>b.data.localeCompare(a.data))}
+function filtrarHistorico(){const busca=$("buscaHistorico").value.toLowerCase().trim(),tipo=$("filtroTipoHistorico").value,mes=$("filtroHistoricoMes").value;return registros.filter(r=>{const texto=`${r.desc} ${r.categoria} ${r.pagamento} ${r.tipoCompra} ${r.obs}`.toLowerCase();return(!busca||texto.includes(busca))&&(!tipo||r.tipo===tipo)&&(!mes||r.data.startsWith(mes))}).sort((a,b)=>b.data.localeCompare(a.data))}
+function gerarParcelasCartao(){let arr=[];registros.filter(r=>r.tipo==="Despesa"&&r.pagamento==="Crédito").forEach(r=>{const qtd=r.parcelado==="Sim"?(r.parcelas||1):1;for(let i=1;i<=qtd;i++){arr.push({...r,parcelaNumero:i,parcelaTotal:qtd,mesFatura:addMeses(r.mesInicio||r.data.slice(0,7),i-1),valorDaParcela:r.valor/qtd,status:i===qtd&&qtd>1?"Última parcela":qtd>1?"Parcelada":"À vista"})}});return arr.sort((a,b)=>b.mesFatura.localeCompare(a.mesFatura))}
+function filtrarCartao(){const busca=$("buscaCartao").value.toLowerCase().trim(),mes=$("filtroCartaoMes").value,status=$("filtroCartaoStatus").value;return gerarParcelasCartao().filter(r=>{const texto=`${r.desc} ${r.categoria}`.toLowerCase();return(!busca||texto.includes(busca))&&(!mes||r.mesFatura===mes)&&(!status||(status==="avista"?r.parcelaTotal===1:r.parcelaTotal>1))})}
+function linhaEntrada(r){return`<tr><td>${dataBR(r.data)}</td><td><strong>${esc(r.desc)}</strong></td><td><span class="tag tag-verde">${esc(r.categoria)}</span></td><td class="valor entrada">${moeda(r.valor)}</td><td><div class="acoes-tabela"><button class="btn-perigo" onclick="excluir('${r.id}')">Excluir</button></div></td></tr>`}
+function linhaDespesa(r){const par=r.pagamento==="Crédito"?(r.parcelado==="Sim"?`${r.parcelas}x de ${moeda(r.valorParcela||r.valor/r.parcelas)}`:"À vista"):"-";return`<tr><td>${dataBR(r.data)}</td><td><strong>${esc(r.desc)}</strong></td><td><span class="tag">${esc(r.categoria)}</span></td><td>${esc(r.pagamento||"-")}</td><td>${par}</td><td class="valor despesa">${moeda(r.valor)}</td><td><div class="acoes-tabela"><button class="btn-perigo" onclick="excluir('${r.id}')">Excluir</button></div></td></tr>`}
+function linhaHistorico(r){const classe=r.tipo==="Entrada"?"entrada":"despesa",sinal=r.tipo==="Entrada"?"+":"-";return`<tr><td><span class="tag ${r.tipo==="Entrada"?"tag-verde":""}">${esc(r.tipo)}</span></td><td>${dataBR(r.data)}</td><td><strong>${esc(r.desc)}</strong></td><td>${esc(r.categoria)}</td><td class="valor ${classe}">${sinal} ${moeda(r.valor)}</td><td><div class="acoes-tabela"><button class="btn-perigo" onclick="excluir('${r.id}')">Excluir</button></div></td></tr>`}
+function linhaCartao(r){return`<tr><td>${r.mesFatura.split("-").reverse().join("/")}</td><td><strong>${esc(r.desc)}</strong></td><td><span class="tag">${esc(r.categoria)}</span></td><td>${r.parcelaNumero}/${r.parcelaTotal}</td><td class="valor despesa">${moeda(r.valorDaParcela)}</td><td>${moeda(r.valor)}</td><td><span class="tag tag-azul">${r.status}</span></td></tr>`}
+function atualizarResumo(){const mes=mesAtual();const doMes=registros.filter(r=>r.data.startsWith(mes));const entradas=doMes.filter(r=>r.tipo==="Entrada"),despesas=doMes.filter(r=>r.tipo==="Despesa");const totalE=entradas.reduce((s,r)=>s+Number(r.valor),0),totalD=despesas.reduce((s,r)=>s+Number(r.valor),0),saldo=totalE-totalD;const parcelasMes=gerarParcelasCartao().filter(p=>p.mesFatura===mes);const totalCredito=parcelasMes.reduce((s,p)=>s+p.valorDaParcela,0);
+$("cardEntradas").textContent=moeda(totalE);$("cardDespesas").textContent=moeda(totalD);$("cardSaldo").textContent=moeda(saldo);$("cardCredito").textContent=moeda(totalCredito);$("cardSaldo").style.color=saldo>=0?"var(--verde)":"var(--vermelho)";
+$("maiorEntrada").textContent=moeda(entradas.length?Math.max(...entradas.map(r=>r.valor)):0);$("maiorDespesa").textContent=moeda(despesas.length?Math.max(...despesas.map(r=>r.valor)):0);$("creditoMes").textContent=moeda(totalCredito);
+const futuras=gerarParcelasCartao().filter(p=>p.mesFatura>mes).reduce((s,p)=>s+p.valorDaParcela,0);$("parcelasFuturas").textContent=moeda(futuras);atualizarMeta(totalD);atualizarCategorias(despesas)}
+function atualizarMeta(totalD){$("metaInput").value=meta||"";if(!meta){$("carinha").textContent="🙂";$("barraMeta").style.width="0%";$("msgMeta").textContent="Defina uma meta para acompanhar seus gastos.";$("situacaoMeta").textContent="Sem meta";return}const pct=(totalD/meta)*100;$("barraMeta").style.width=Math.min(pct,100)+"%";if(pct<=50){$("carinha").textContent="😄";$("msgMeta").textContent=`${pct.toFixed(1)}% usado — tá bem controlado!`;$("situacaoMeta").textContent="Controlado";$("barraMeta").style.background="var(--verde)"}else if(pct<=75){$("carinha").textContent="🙂";$("msgMeta").textContent=`${pct.toFixed(1)}% usado — ainda está tranquila.`;$("situacaoMeta").textContent="Tranquilo";$("barraMeta").style.background="#84cc16"}else if(pct<=90){$("carinha").textContent="😬";$("msgMeta").textContent=`${pct.toFixed(1)}% usado — atenção.`;$("situacaoMeta").textContent="Atenção";$("barraMeta").style.background="var(--amarelo)"}else if(pct<=100){$("carinha").textContent="😰";$("msgMeta").textContent=`${pct.toFixed(1)}% usado — quase batendo a meta!`;$("situacaoMeta").textContent="Quase no limite";$("barraMeta").style.background="#fb7185"}else{$("carinha").textContent="😭";$("msgMeta").textContent=`${pct.toFixed(1)}% usado — passou da meta kkkkk`;$("situacaoMeta").textContent="Passou da meta";$("barraMeta").style.background="var(--vermelho)"}}
+function atualizarCategorias(despesas){const mapa={};despesas.forEach(r=>mapa[r.categoria]=(mapa[r.categoria]||0)+Number(r.valor));const itens=Object.entries(mapa).sort((a,b)=>b[1]-a[1]);$("topCategoria").textContent=itens.length?`${itens[0][0]} (${moeda(itens[0][1])})`:"-";if(!itens.length){$("graficoCategorias").innerHTML="";return}const total=itens.reduce((s,[,v])=>s+v,0);$("graficoCategorias").innerHTML=`<h2 style="margin-top:18px;">Onde mais saiu dinheiro</h2>`+itens.slice(0,8).map(([cat,valor])=>{const pct=total?(valor/total)*100:0;return`<div class="barra-item"><strong>${esc(cat)}</strong><div class="barra-fundo"><div class="barra" style="width:${pct}%;background:linear-gradient(90deg,var(--rosa-escuro),var(--rosa-medio));"></div></div><span>${moeda(valor)}</span></div>`}).join("")}
+function renderizar(){const entradas=filtrarEntradas(),despesas=filtrarDespesas(),historico=filtrarHistorico(),cartao=filtrarCartao();$("listaEntradas").innerHTML=entradas.map(linhaEntrada).join("");$("listaDespesas").innerHTML=despesas.map(linhaDespesa).join("");$("listaHistorico").innerHTML=historico.map(linhaHistorico).join("");$("listaCartao").innerHTML=cartao.map(linhaCartao).join("");$("vazioEntradas").classList.toggle("oculto",entradas.length>0);$("vazioDespesas").classList.toggle("oculto",despesas.length>0);$("vazioHistorico").classList.toggle("oculto",historico.length>0);$("vazioCartao").classList.toggle("oculto",cartao.length>0);$("faturaFiltrada").textContent=moeda(cartao.reduce((s,p)=>s+p.valorDaParcela,0));$("qtdCartao").textContent=cartao.length;atualizarResumo()}
+function exportarBackup(){const blob=new Blob([JSON.stringify({registros,meta},null,2)],{type:"application/json"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="backup-controle-financeiro-freitas-marcelino.json";a.click();URL.revokeObjectURL(url);toast("Backup exportado!")}
+function importarBackup(event){const arq=event.target.files[0];if(!arq)return;const leitor=new FileReader();leitor.onload=()=>{try{const dados=JSON.parse(leitor.result);if(!Array.isArray(dados.registros)){alert("Arquivo inválido.");return}if(!confirm("Deseja substituir os dados atuais pelo backup?"))return;registros=dados.registros;meta=Number(dados.meta)||0;localStorage.setItem(CHAVE,JSON.stringify(registros));localStorage.setItem(CHAVE_META,meta);renderizar();toast("Backup importado!")}catch{alert("Não consegui importar esse arquivo.")}};leitor.readAsText(arq);event.target.value=""}
+function limparTudo(){if(!confirm("Tem certeza que deseja apagar tudo?"))return;registros=[];salvar();toast("Tudo apagado.")}
+$("formEntrada").addEventListener("submit",cadastrarEntrada);$("formDespesa").addEventListener("submit",cadastrarDespesa);
+$("entradaData").value=hojeISO();$("despesaData").value=hojeISO();$("creditoMesInicio").value=mesAtual();$("filtroEntradaMes").value=mesAtual();$("filtroDespesaMes").value=mesAtual();$("filtroHistoricoMes").value=mesAtual();$("filtroCartaoMes").value=mesAtual();mostrarCredito();renderizar();
+</script>
+</body>
+</html>
